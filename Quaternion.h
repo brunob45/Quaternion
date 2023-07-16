@@ -3,10 +3,10 @@
 
 class Quaternion {
 public:
-    float a;
-    float b;
-    float c;
-    float d;
+    union { float a, w; };
+    union { float b, x, roll; };
+    union { float c, y, pitch; };
+    union { float d, z, yaw; };
 
     Quaternion() {a = 1; b = c = d = 0;}
 
@@ -15,6 +15,7 @@ public:
 
     // This returns a Quaternion that rotates in each given axis in radians.
     // We use standard right hand rule for rotations and coordinates.
+    // x=roll, y=pitch, z=yaw
     static const Quaternion from_euler_rotation(float x, float y, float z);
 
     // This is like from_euler_rotation but for small angles (less than 45 deg (PI/4))
@@ -53,6 +54,7 @@ public:
     const Quaternion rotate(const Quaternion& q) const;
     Quaternion & fractional(float f);
 
+    // This method returns the equivalent euler rotation
     const Quaternion get_euler();
 };
 

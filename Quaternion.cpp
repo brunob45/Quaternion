@@ -173,21 +173,9 @@ Quaternion & Quaternion::fractional(float f) {
 const Quaternion Quaternion::get_euler()
 {
     Quaternion ret;
-    float theta = acosf(a) * 2;
-    float sin = sinf(theta/2);
-    if (sin < 0.001f && sin > -0.001f)
-    {
-        // sin is near 0
-        ret.b = 0;
-        ret.c = 0;
-        ret.d = 0;
-    }
-    else
-    {
-        ret.b = b / sin;
-        ret.c = c / sin;
-        ret.d = d / sin;
-        ret = ret.normalize();
-    }
+    ret.a = 0.0f;
+    ret.roll = atan2f(a * b + c * d, 0.5f - b * b - c * c);
+    ret.pitch = asinf(-2.0f * (b * d - a * c));
+    ret.yaw = atan2f(b * c + a * d, 0.5f - c * c - d * d);
     return ret;
 }
