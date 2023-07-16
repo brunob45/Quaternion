@@ -3,10 +3,10 @@
 
 class Quaternion {
 public:
-    float a;
-    float b;
-    float c;
-    float d;
+    union { float a, w; };
+    union { float b, x, roll; };
+    union { float c, y, pitch; };
+    union { float d, z, yaw; };
 
     Quaternion() {a = 1; b = c = d = 0;}
 
