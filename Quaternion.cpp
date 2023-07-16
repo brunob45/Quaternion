@@ -170,12 +170,17 @@ Quaternion & Quaternion::fractional(float f) {
     return normalize();
 }
 
-const Quaternion Quaternion::to_euler_rotation()
+const float Quaternion::get_roll()
 {
-    Quaternion ret;
-    ret.a = 0.0f;
-    ret.roll = atan2f(a * b + c * d, 0.5f - b * b - c * c);
-    ret.pitch = asinf(-2.0f * (b * d - a * c));
-    ret.yaw = atan2f(b * c + a * d, 0.5f - c * c - d * d);
-    return ret;
+    return atan2f(a * b + c * d, 0.5f - b * b - c * c);
+}
+
+const float Quaternion::get_pitch()
+{
+    return asinf(-2.0f * (b * d - a * c));
+}
+
+const float Quaternion::get_yaw()
+{
+    return atan2f(b * c + a * d, 0.5f - c * c - d * d);
 }

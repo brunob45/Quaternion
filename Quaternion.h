@@ -3,10 +3,10 @@
 
 class Quaternion {
 public:
-    union { float a, w; };
-    union { float b, x, roll; };
-    union { float c, y, pitch; };
-    union { float d, z, yaw; };
+    float a;
+    float b;
+    float c;
+    float d;
 
     Quaternion() {a = 1; b = c = d = 0;}
 
@@ -54,8 +54,10 @@ public:
     const Quaternion rotate(const Quaternion& q) const;
     Quaternion & fractional(float f);
 
-    // This method returns the equivalent euler rotation
-    const Quaternion to_euler_rotation();
+    // These methods return the equivalent euler rotation
+    const float get_roll();
+    const float get_pitch();
+    const float get_yaw();
 };
 
 #endif
