@@ -52,6 +52,8 @@ public:
     // The input must be a pure vector (a == 0)
     const Quaternion rotate(const Quaternion& q) const;
     Quaternion & fractional(float f);
+
+    const Quaternion get_euler();
 };
 
 #endif

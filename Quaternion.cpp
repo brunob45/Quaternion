@@ -170,3 +170,24 @@ Quaternion & Quaternion::fractional(float f) {
     return normalize();
 }
 
+const Quaternion Quaternion::get_euler()
+{
+    Quaternion ret;
+    float theta = acosf(a) * 2;
+    float sin = sinf(theta/2);
+    if (sin < 0.001f && sin > -0.001f)
+    {
+        // sin is near 0
+        ret.b = 0;
+        ret.c = 0;
+        ret.d = 0;
+    }
+    else
+    {
+        ret.b = b / sin;
+        ret.c = c / sin;
+        ret.d = d / sin;
+        ret = ret.normalize();
+    }
+    return ret;
+}
