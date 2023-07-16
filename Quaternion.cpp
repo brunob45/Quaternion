@@ -170,7 +170,7 @@ Quaternion & Quaternion::fractional(float f) {
     return normalize();
 }
 
-const Quaternion Quaternion::get_euler()
+const Quaternion Quaternion::to_euler_rotation()
 {
     Quaternion ret;
     ret.a = 0.0f;
