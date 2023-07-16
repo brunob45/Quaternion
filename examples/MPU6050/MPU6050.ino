@@ -4,30 +4,34 @@
 
 Adafruit_MPU6050 mpu;
 SF fusion;
+uint32_t last_print;
 
 void setup()
 {
     Serial.begin(115200);
     while (!Serial)
     {
-        delay(10);
+        yield();
     }
 
+    // Initialize the MPU6050
     if (!mpu.begin())
     {
         Serial.println("Failed to find MPU6050 chip");
         while (1)
         {
-            delay(10);
+            yield();
         }
     }
 }
 
 void loop()
 {
+    // Update sensor data
     sensors_event_t a, g, temp;
     mpu.getEvent(&a, &g, &temp);
 
+    // Update the orientation
     float deltat = fusion.deltatUpdate();
     fusion.MahonyUpdate(
         g.gyro.x, g.gyro.y, g.gyro.z,
@@ -42,16 +46,20 @@ void loop()
     memcpy(&attitude.a, fusion.getQuat(), sizeof(float) * 4);
 
     // Align the acceleration with the NED coordinate system
-    Quaternion accel_corrected = attitude.rotate(accel_raw);
+    // Since we don't have a magnetometer, North is were the board was pointing at boot
+    Quaternion accel_ned = attitude.rotate(accel_raw);
 
-    // Print the result
-    Serial.print("X: ");
-    Serial.println(accel_corrected.x);
-    Serial.print("Y: ");
-    Serial.println(accel_corrected.y);
-    Serial.print("Z: ");
-    Serial.println(accel_corrected.z);
-
-    Serial.println();
-    delay(500);
+    // Print the result every 500ms
+    if (millis() - last_print >= 500)
+    {
+        last_print = millis();
+        Serial.print("X: ");
+        Serial.println(accel_ned.x);
+        Serial.print("Y: ");
+        Serial.println(accel_ned.y);
+        Serial.print("Z: ");
+        Serial.println(accel_ned.z);
+        Serial.println();
+    }
+    delay(50);
 }
