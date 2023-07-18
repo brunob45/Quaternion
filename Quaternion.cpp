@@ -186,7 +186,7 @@ Quaternion & Quaternion::fractional(float f) {
 const Quaternion Quaternion::to_euler()
 {
     Quaternion ret;
-    ret.a = 0;
+    ret.a = 0; // The result is a pure vector
 
     // Check to circumvent gimbal lock - assume yaw is 0
     const float test = w * y - z * x;
