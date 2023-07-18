@@ -55,9 +55,7 @@ public:
     Quaternion & fractional(float f);
 
     // These methods return the equivalent euler rotation
-    const float get_roll();
-    const float get_pitch();
-    const float get_yaw();
+    const Quaternion to_euler();
 };
 
 #endif
