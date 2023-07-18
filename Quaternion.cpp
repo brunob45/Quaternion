@@ -75,18 +75,6 @@ const Quaternion Quaternion::from_axis_angle_approx(float x, float y, float z) {
 // Quaternion rotation.
 // 800B
 const Quaternion Quaternion::from_euler_rotation(float x, float y, float z) {
-    // Check to circumvent gimbal lock - combine roll and yaw
-    if (y > 1.55f) // 1.55 rad = 88,81 degrees
-    {
-        z -= x;
-        x = 0;
-    }
-    else if (y < -1.55f)
-    {
-        z += x;
-        x = 0;
-    }
-
     float c1 = cosf(y/2.0f);
     float c2 = cosf(z/2.0f);
     float c3 = cosf(x/2.0f);
@@ -94,7 +82,6 @@ const Quaternion Quaternion::from_euler_rotation(float x, float y, float z) {
     float s1 = sinf(y/2.0f);
     float s2 = sinf(z/2.0f);
     float s3 = sinf(x/2.0f);
-
     Quaternion ret;
     ret.a = c1 * c2 * c3 + s1 * s2 * s3;
     ret.b = c1 * c2 * s3 - s1 * s2 * c3;
