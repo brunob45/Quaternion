@@ -204,9 +204,9 @@ const Quaternion Quaternion::to_euler()
     }
     else
     {
-        ret.roll = atan2f(2 * (w * x + y * z), 1 - 2 * (x*x + y*y));
+        ret.roll = atan2f(2 * (w * x + y * z), 1 - 2 * (x * x + y * y));
         ret.pitch = asinf(2 * test);
-        ret.yaw = atan2f(2 * (w * z + x * y), 1 - 2 * (y*y + z*z));
+        ret.yaw = atan2f(2 * (w * z + x * y), 1 - 2 * (y * y + z * z));
     }
 
     return ret;
