@@ -75,7 +75,7 @@ const Quaternion Quaternion::from_axis_angle_approx(float x, float y, float z) {
 // Quaternion rotation.
 // 800B
 const Quaternion Quaternion::from_euler_rotation(float x, float y, float z) {
-    // Check to circumvent gimbal lock
+    // Check to circumvent gimbal lock - combine roll and yaw
     if (y > 1.55f) // 1.55 rad = 88,81 degrees
     {
         z -= x;
@@ -188,7 +188,7 @@ const Quaternion Quaternion::to_euler()
     Quaternion ret;
     ret.a = 0;
 
-    // Check to circumvent gimbal lock
+    // Check to circumvent gimbal lock - assume yaw is 0
     const float test = w * y - z * x;
     if (test > 0.4999f) // asin(2*0.4999) = 88.85 degrees
     {
